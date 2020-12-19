@@ -5,17 +5,20 @@ INCLUDE Irvine32.inc
 .CODE
 main PROC
 	
-	ByteVal0 BYTE ? ;Uninitialized byte
-	ByteVal1 BYTE 48 ;Decimal value
-	ByteVal2 BYTE 30H ;Hexadecimal value
-	ByteVal3 BYTE 01010110B ;Binary value
-	ByteVal4 BYTE 1, 2, 3, 4 ;Define 4-item array of size byte
-	ByteVal5 BYTE 'Hello‘ ;Character string
+	;; Remember WORD SAVED IN 2 BYTES
 
-	ByteVal6 BYTE 'H', 'e', 'l', 'l', 'o’ ;List of characters and it is equivalent to the previous character string 'Hello'
-	ByteVal7 BYTE 5 Dup (3) ;Define 5-item array, with each item initialized with value = 3
-	ByteVal8 BYTE 3 Dup (1, 2, 3) ;Define 3-item array, with items initialized with values 1, 2, and 3 respectively 2D Arr
+	WordVal0 WORD ? ;Uninitialized word
+	WordVal3 WORD 65, 310 ;Define 2-word array
+	WordVal4 WORD 10 Dup (43) ;Define 10-word array, with each item initialized with the value = 43
 
+	;; Remember DWORD SAVED IN 4 BYTES
+
+	DWordVal0 DWORD ? ;Uninitialized double word
+	DWordVal2 DWORD 6F34A030H ;Hexadecimal value
+	DWordVal3 DWORD 69065, 350, 65 ;Define 3-double-word array
+	DWordVal4 DWORD 5 Dup (?) ;Define 5-double-word array without initializing its items
+
+	
 	call dumpregs	
 	exit
 main ENDP
