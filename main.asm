@@ -4,14 +4,15 @@ INCLUDE Irvine32.inc
 
 .CODE
 main PROC
-	mov eax,3
-	mov bx,ax
+	
+	;Comment by the way
 
-	add eax,4
-	add al,ah
+	; Ex1 100-50+25
 
-	mov ebx,6
-	sub ebx,3
+	mov eax,100
+	sub eax,50
+	add eax,25
+
 	call dumpregs	
 	exit
 main ENDP
