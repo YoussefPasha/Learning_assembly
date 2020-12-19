@@ -18,7 +18,7 @@
 
 ## Little Endian Order
 
-  # Val DWPRD = 12345678h
+  # Val DWORD = 12345678h
 
 | Offset | Value    |
 |--------|----------|
