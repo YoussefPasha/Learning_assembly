@@ -4,6 +4,8 @@ INCLUDE Irvine32.inc
 
 .CODE
 main PROC
+	mov eax,3
+	mov bx,ax
 	call dumpregs	
 	exit
 main ENDP
