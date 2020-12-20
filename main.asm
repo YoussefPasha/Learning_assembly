@@ -1,16 +1,13 @@
 INCLUDE Irvine32.inc
 
 .DATA
-
-	myWord WORD 1000h
+	
+	byteVal BYTE 10001111b
 
 .CODE
 main PROC
 	
-	NEG myWord ; two's complement 1000 
-	mov bx, myWord
-
-	call dumpregs
+	movzx ax, byteVal ; AX = 0000000010001111b
 
 	exit
 main ENDP
