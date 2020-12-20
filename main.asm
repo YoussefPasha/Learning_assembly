@@ -7,9 +7,8 @@ INCLUDE Irvine32.inc
 .CODE
 main PROC
 	
-	inc myWord ; 1001
+	NEG myWord ; two's complement 1000 
 	mov bx, myWord
-	dec bx ; 1000
 
 	call dumpregs
 
