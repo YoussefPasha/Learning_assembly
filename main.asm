@@ -2,13 +2,18 @@ INCLUDE Irvine32.inc
 
 .DATA
 	
-	byteVal BYTE 10001111b
+	
 
 .CODE
 main PROC
 	
-	movzx ax, byteVal ; AX = 0000000010001111b
+	mov cx, 0B3A3H ; cx= B3A3H
+	movzx ebx,cx ; ebx = 0000B3A3H  ;cx = cl+ch so [cl = A3H] & [ch = B3H]
+	movzx edx,cl ; edx = 000000A3H
+	movzx cx,ch  ; cx  = 00B3H ; why cx only 4bit ecx => 8bit => cx -> 4bit
 
+
+	call dumpregs
 	exit
 main ENDP
 
