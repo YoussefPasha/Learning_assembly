@@ -31,8 +31,6 @@ main PROC
 	mov edi , offset Data
 
 	Loop2:
-		; if( m >= arr[i] && m <= arr[i+1] ) =>  
-		; if( !m < arr[i] && !m > arr[i+1] ) => 
 		CMP eax , [edi]
 		JNB True1
 
