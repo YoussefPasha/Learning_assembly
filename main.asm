@@ -6,22 +6,35 @@ INCLUDE Irvine32.inc
 main PROC
 	
 	call readdec
+	mov edx, eax ; a
+	call readdec
+	mov esi, eax ; r
+	call readdec
+	mov ecx, eax ; n
 
-	mov ecx, eax
 	dec ecx
-	dec ecx
-	mov ebx , eax
-	Fac_loop:
-		mov esi, ecx
-		mov edx, ebx
-		sum_loop:
-			add ebx, edx
-		LOOP sum_loop
-		mov ecx, esi
-	LOOP Fac_loop
 
-	mov eax, ebx
+
+	mov eax,edx
 	call writedec
+		call crlf
+
+	Loop1:
+		mov ebx , ecx ; 5
+		mov ecx, esi
+		mov eax, edx
+
+		dec ecx
+
+		Loop2:
+			add eax,edx
+		LOOP Loop2
+		mov edx,eax
+		call writedec
+		call crlf
+		mov ecx , ebx
+	LOOP Loop1
+	
 
 	exit
 main ENDP
