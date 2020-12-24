@@ -1,105 +1,58 @@
 INCLUDE Irvine32.inc
 
 .DATA
-	Count BYTE 0
-	Arr1 BYTE 21 dup("0")  
-	Arr2 BYTE 21 dup("0") 
-	isWrong BYTE " IS WRONG"
-	isCorrect BYTE " IS CORRECT"
-	isAlmostCorrect BYTE " IS ALMOST CORRECT"
+aa dword ?
+rr dword ?
+nn dword ?
+s1 byte "Enter a:",0
+s2 byte "Enter r:",0
+s3 byte "Enter n:",0
 
 .CODE
 main PROC
+	mov edx , offset s1
+	call writestring 
+	call readdec
+	mov aa,eax
+	call crlf
+	mov edx,offset s2
+	call writestring
+	call readdec
+	mov rr,eax
+	call crlf
+	mov edx, offset s3
+	call writestring
+	call readdec
+	mov nn,eax
+	call crlf 
+	mov eax,aa
+	call writedec
+	call crlf 
+	mov ecx,nn
+	dec ecx 
+	l1:
+		mov ebx , ecx ; 5
+		mov ecx, rr
+		mov eax, aa
+
+		dec ecx
+
+	l2:
+	add eax,aa
+	loop l2
+	mov aa,eax
+	call writedec
+	call crlf
+	mov ecx,ebx 
+	loop l1
 	
-	mov Count ,0
-	; Arr1
-	mov edx, offset Arr1
-	mov ecx, Lengthof Arr1
-	call readstring
-	mov ebx, eax
+	
 
-	; Arr2
-	mov edx, offset Arr2
-	mov ecx, Lengthof Arr2
-	call readstring
-	mov edx, eax
-
-	; if(ebx > edx) => if(!ebx <= edx) JNBE
-	; if(ebx < edx) => if(!ebx >= edx) JNAE
-	; if(ebx = edx) => JNE
-
-	CMP ebx , edx
-	JE True3
-	Jb True2
-	Ja True1
-
-	True1: 
-	mov eax,0
-		mov eax, ebx ; eax = ebx edx < eax
-		JMP OutPut
-	True2:
-	mov eax ,0
-		mov eax, edx ; eax = edx ebx < edx 
-		JMP OutPut
-	True3:
-	mov eax,0
-		mov eax, edx
-		JMP OutPut
-	 
-	 ; ebx = 10 edx = 5  eax = 10  
-	 ; comment 
-
-
-	 OutPut:
-		
-		mov ecx,eax
-		mov edi , offset Arr1
-		mov esi , offset Arr2
-		mov eax,0
-	    Loop1:
-			mov al, [edi]
-			mov bl, [esi]
-			CMP al,bl
-			JNE True4
-			inc edi
-			inc esi
-			JMP goToLoopy
-			True4:
-				inc Count
-				inc edi
-				inc esi
-			goToLoopy:	LOOP Loop1
-
-	 CMP Count , 2 
-		Ja True5
-		CMP Count, 0 
-
-			JE True6
-
-			mov edx,0
-				mov edx , offset Arr2
-				call writestring
-				mov edx , offset isAlmostCorrect
-				call writestring
-				JMP quit
-
-			True5:
-			mov edx,0
-				mov edx , offset Arr2
-				call writestring
-				mov edx , offset isWrong
-				call writestring
-				JMP quit
-			True6:
-			mov edx,0
-				mov edx , offset Arr2
-				call writestring
-				mov edx , offset isCorrect
-				call writestring
-				JMP quit
-	quit:
 	exit
 main ENDP
+
+
+
+
+
 END main
-
-
