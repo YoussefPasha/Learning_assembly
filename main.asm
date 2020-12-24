@@ -1,75 +1,35 @@
 INCLUDE Irvine32.inc
 
 .DATA
-
-	Data DWORD 21 Dup(?) 
-	num DWORD ?
-	result DWORD 0
-	EnterQ4 BYTE "Enter the number of intervals N: ",0
-	Enter2Q4 BYTE "Enter the N intervals:",0
-	Enter3Q4 BYTE "The input number exists the following number of times in the N intervals: ",0
+	EnterQ5 BYTE "Please Enter N: ",0
+	Enter2Q5 BYTE "The factorial is: ",0
 
 .CODE
 main PROC
 	
-	mov edx,offset EnterQ4
+	mov edx,offset EnterQ5
 	call writestring
 
-	call readint
-	mov num, eax
-	add num, eax
+	call readdec
+
+	mov ecx, eax
+	dec ecx
+	dec ecx
 	mov ebx , eax
+	Fac_loop:
+		mov esi, ecx
+		mov edx, ebx
+		sum_loop:
+			add ebx, edx
+		LOOP sum_loop
+		mov ecx, esi
+	LOOP Fac_loop
 
-
-	mov ecx, num
-
-	mov edi , offset Data
-	
-	mov edx,offset Enter2Q4
-	call writestring
-	call CRLF
-
-	Loop1:
-		call readint
-		mov [edi], eax
-		add edi, 4
-	Loop Loop1
-
-	call readint
-
-
-	mov ecx , ebx
-	mov edi , offset Data
-
-	Loop2:
-		CMP eax , [edi]
-		JNB True1
-
-		add edi,8
-		JMP GoToLoopy
-		
-		True1: 
-			CMP eax , [edi+4]
-			JNA True2
-
-			add edi , 8
-
-			JMP GoToLoopy
-			True2:
-				inc result
-				add edi , 8
-
-
-	GoToLoopy: Loop Loop2
-
-	mov edx,offset Enter3Q4
+	mov edx,offset Enter2Q5
 	call writestring
 
-	mov eax , result
+	mov eax, ebx
 	call writedec
-
-
-
 
 	exit
 main ENDP
