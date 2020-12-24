@@ -1,76 +1,81 @@
 INCLUDE Irvine32.inc
 
 .DATA
-	
-	Data DWORD 21 Dup(?)
-	Data1 DWORD 21 Dup(?)
+
+	Data DWORD 21 Dup(?) 
 	num DWORD ?
-	num1 DWORD ?
-	num2 DWORD ?
-	PO DWORD "["
-	PC DWORD "]"
-	COM DWORD " ,"
-	EnterQ1 BYTE "Enter number of Elements: ",0
-	Enter2Q1 BYTE "Enter your Elements: ",0
-	Enter3Q1 BYTE "Your Rotated Elements are: ",0
+	result DWORD 0
+	EnterQ4 BYTE "Enter the number of intervals N: ",0
+	Enter2Q4 BYTE "Enter the N intervals:",0
+	Enter3Q4 BYTE "The input number exists the following number of times in the N intervals: ",0
+
 .CODE
 main PROC
-
-	mov edx,offset EnterQ1
-	call writestring
 	
-	call readdec
-	mov num,eax
-
-	mov edx,offset Enter2Q1
+	mov edx,offset EnterQ4
 	call writestring
+
+	call readint
+	mov num, eax
+	add num, eax
+	mov ebx , eax
+
+
+	mov ecx, num
 
 	mov edi , offset Data
-	mov ecx, num
+	
+	mov edx,offset Enter2Q4
+	call writestring
+	call CRLF
+
 	Loop1:
-		call readdec
+		call readint
 		mov [edi], eax
 		add edi, 4
-	LOOP Loop1
+	Loop Loop1
 
-	mov edx,offset Enter3Q1
-	call writestring
+	call readint
 
+
+	mov ecx , ebx
 	mov edi , offset Data
-	mov edx, [edi]
-	mov num1,edx
-	add edi, 4
-	mov edx, [edi]
-	mov num2,edx
-	
-
-	mov edx, offset PO
-	call writestring
-	
-	mov ecx, num
-
-	dec ecx
-	dec ecx
-	add edi, 4
 
 	Loop2:
-		mov eax, [edi]
-		call writedec
-		mov edx,offset COM
-		call writestring
-		add edi, 4
-	LOOP Loop2
+		CMP eax , [edi]
+		JNB True1
 
-	mov eax, num1
-	call writedec
-	mov edx,offset COM
+		add edi,8
+		JMP GoToLoopy
+		
+		True1: 
+			CMP eax , [edi+4]
+			JNA True2
+
+			add edi , 8
+
+			JMP GoToLoopy
+			True2:
+				inc result
+				add edi , 8
+
+
+	GoToLoopy: Loop Loop2
+
+	mov edx,offset Enter3Q4
 	call writestring
-	mov eax, num2
+
+	mov eax , result
 	call writedec
-	mov edx,offset PC
-	call writestring
+
+
+
 
 	exit
 main ENDP
+
+
+
+
 
 END main
