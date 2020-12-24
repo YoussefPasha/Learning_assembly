@@ -1,50 +1,62 @@
 INCLUDE Irvine32.inc
 
 .DATA
-aa dword ?
-rr dword ?
-nn dword ?
-s1 byte "Enter a:",0
-s2 byte "Enter r:",0
-s3 byte "Enter n:",0
+arr dword 25 dup(?)
+s1 byte "Enter the number of intervals N:",0
+s2 byte "Enter the N intervals:",0
+s3 byte "The input number exists the following number of times in the N intervals: ",0
+N dword ?
+res dword 0
+;s3 byte "Enter n:",0
 
 .CODE
 main PROC
 	mov edx , offset s1
 	call writestring 
 	call readdec
-	mov aa,eax
 	call crlf
-	mov edx,offset s2
-	call writestring
-	call readdec
-	mov rr,eax
+	mov edx, offset s2
+	call writestring 
 	call crlf
-	mov edx, offset s3
-	call writestring
-	call readdec
-	mov nn,eax
-	call crlf 
-	mov eax,aa
-	call writedec
-	call crlf 
-	mov ecx,nn
-	dec ecx 
+	mov N,eax
+	add N,eax
+	mov edx,eax
+	mov ecx,N
+	mov esi ,offset arr
+	;first loop
 	l1:
-		mov ebx , ecx ; 5
-		mov ecx, rr
-		mov eax, aa
-
-		dec ecx
-
-	l2:
-	add eax,aa
-	loop l2
-	mov aa,eax
-	call writedec
-	call crlf
-	mov ecx,ebx 
+	call readdec
+	mov [esi],eax
+	add esi,4
 	loop l1
+	;read M
+	call readdec
+	mov ecx , edx
+	mov esi , offset arr
+	;checking intervals
+	l2:
+	cmp eax,[esi]
+	jnb ss1
+	add esi,8
+	jmp lo
+	ss1:
+	cmp eax,[esi+4]
+	jna ss2
+	add esi,8
+	jmp lo
+	ss2:
+	inc res
+	add esi,8
+	lo:	loop l2
+	mov eax,res
+	mov edx,offset s3
+	call writestring
+	call writedec 
+	call crlf
+
+
+
+
 	
 	
 
