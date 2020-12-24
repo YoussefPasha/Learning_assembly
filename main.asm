@@ -47,6 +47,8 @@ main PROC
 		JMP OutPut
 	 
 	 ; ebx = 10 edx = 5  eax = 10  
+	 ; comment 
+
 
 	 OutPut:
 		
