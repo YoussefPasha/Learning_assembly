@@ -1,66 +1,101 @@
 INCLUDE Irvine32.inc
 
 .DATA
-
-	EnterQ6 BYTE "Enter a: ",0
-	Enter2Q6 BYTE "Enter r: ",0
-	Enter3Q6 BYTE "Enter n: ",0
-	Enter4Q6 BYTE "The generated sequence:",0
+	Count BYTE 0
+	Arr1 BYTE 21 dup("0")  
+	Arr2 BYTE 21 dup("0") 
+	isWrong BYTE " IS WRONG",0
+	isCorrect BYTE " IS CORRECT",0
+	isAlmostCorrect BYTE " IS ALMOST CORRECT",0
 
 .CODE
 main PROC
-
-	mov edx,offset EnterQ6
-	call writestring
 	
-	call readdec
-	mov edi, eax ; a
+	mov Count ,0
+	; Arr1
+	mov edx, offset Arr1
+	mov ecx, Lengthof Arr1
+	call readstring
+	mov ebx, eax
 
-	mov edx,offset Enter2Q6
-	call writestring
+	; Arr2
+	mov edx, offset Arr2
+	mov ecx, Lengthof Arr2
+	call readstring
+	mov edx, eax
 
-	call readdec
-	mov esi, eax ; r
+	; if(ebx > edx) => if(!ebx <= edx) JNBE
+	; if(ebx < edx) => if(!ebx >= edx) JNAE
+	; if(ebx = edx) => JNE
 
-	mov edx,offset Enter3Q6
-	call writestring
+	CMP ebx , edx
+	JE True3
+	Jb True2
+	Ja True1
 
-	call readdec
-	mov ecx, eax ; n
+	True1: 
+	mov eax,0
+		mov eax, ebx ; eax = ebx edx < eax
+		JMP OutPut
+	True2:
+	mov eax ,0
+		mov eax, edx ; eax = edx ebx < edx 
+		JMP OutPut
+	True3:
+	mov eax,0
+		mov eax, edx
+		JMP OutPut
+	 
+	 ; ebx = 10 edx = 5  eax = 10  
 
-	dec ecx
+	 OutPut:
+		
+		mov ecx,eax
+		mov edi , offset Arr1
+		mov esi , offset Arr2
+		mov eax,0
+	    Loop1:
+			mov al, [edi]
+			mov bl, [esi]
+			CMP al,bl
+			JNE True4
+			inc edi
+			inc esi
+			JMP goToLoopy
+			True4:
+				inc Count
+				inc edi
+				inc esi
+			goToLoopy:	LOOP Loop1
 
+	 CMP Count , 2 
+		Ja True5
+		CMP Count, 0 
 
-	mov edx,offset Enter4Q6
-	call writestring
-	call crlf
+			JE True6
 
-	mov eax,edi
-	call writedec
-		call crlf
+			mov edx,0
+				mov edx , offset Arr2
+				call writestring
+				mov edx , offset isAlmostCorrect
+				call writestring
+				JMP quit
 
-	Loop1:
-		mov ebx , ecx ; 5
-		mov ecx, esi
-		mov eax, edi
-
-		dec ecx
-
-		Loop2:
-			add eax,edi
-		LOOP Loop2
-		mov edi,eax
-		call writedec
-		call crlf
-		mov ecx , ebx
-	LOOP Loop1
-	
-
+			True5:
+			mov edx,0
+				mov edx , offset Arr2
+				call writestring
+				mov edx , offset isWrong
+				call writestring
+				JMP quit
+			True6:
+			mov edx,0
+				mov edx , offset Arr2
+				call writestring
+				mov edx , offset isCorrect
+				call writestring
+				JMP quit
+	quit:
 	exit
 main ENDP
-
-
-
-
-
 END main
